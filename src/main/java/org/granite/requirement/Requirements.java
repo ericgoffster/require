@@ -14,7 +14,8 @@ import java.util.regex.Pattern;
 /**
  * This code licensed under Mozilla Public License Version 2.0.
  * See attached text in this jar.
- * Utility for making generalized requirements.
+ * 
+ * This class is a utility for making generalized requirements.
  * A thorough understanding of "lambda"'s is very helpful, but not strictly required.
  * This class is very small, but very versatile.
  * Possible use cases: unit testing, input validation, code assertions.
@@ -331,9 +332,9 @@ public final class Requirements {
 	 * A collection must be non-null and be a superset of the given collection to satisfy the condition.
 	 * 
 	 * Example:
-	 *     Require.require(null, Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of {1, 2}")
-	 *     Require.require([], Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of {1, 2}")
-	 *     Require.require([1], Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of {1, 2}")
+	 *     Require.require(null, Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, 2]")
+	 *     Require.require([], Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, 2]")
+	 *     Require.require([1], Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, ]}")
 	 *     Require.require([1, 2], Require.superSetOf(1, 2)) == [1, 2]
 	 *     Require.require([1, 2, 3], Require.superSetOf(1, 2)) == [1, 2, 3]
 	 *  
@@ -373,11 +374,11 @@ public final class Requirements {
 	 * A collection must be non-null and be a subset of the given collection to satisfy the condition.
 	 * 
 	 * Example:
-	 *     Require.require(null, Require.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of {1, 2}")
+	 *     Require.require(null, Require.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of [1, 2]")
 	 *     Require.require([], Require.subSetOf(1, 2)) == []
 	 *     Require.require([1], Require.subSetOf(1, 2)) == [1]
 	 *     Require.require([1, 2], Require.subSetOf(1, 2)) == [1, 2]
-	 *     Require.require([1, 2, 3], Require.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of {1, 2}")
+	 *     Require.require([1, 2, 3], Require.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of [1, 2]")
 	 *     
 	 * @param other The collection to test against.
 	 * @param <E> The type of the elements of either collection.
@@ -396,9 +397,9 @@ public final class Requirements {
 	 * Example:
 	 *     Require.require(null, Require.memberOf([])) # throws IllegalArgumentException("Must be a member of {}")
 	 *     Require.require(null, Require.memberOf([null])) == null
-	 *     Require.require(null, Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of {1, 2}")
+	 *     Require.require(null, Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
 	 *     Require.require(1, Require.memberOf([1, 2])) == 1
-	 *     Require.require(3, Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of {1, 2}")
+	 *     Require.require(3, Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
 	 *     
 	 * @param coll The collection that must contain the object.
 	 * @param <T> The type of the object being tested

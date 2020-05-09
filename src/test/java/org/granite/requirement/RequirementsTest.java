@@ -16,6 +16,9 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+/**
+ * This test will hits all lines in the Requirements class.
+ */
 public class RequirementsTest {
 
 	@Test

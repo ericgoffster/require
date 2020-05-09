@@ -356,13 +356,13 @@ public class RequirementsTest {
 	public void testFunctions() {
 		Object o = new Object();
 		assertTrue(Requirements.hash().apply(o).equals(o.hashCode()));
-		assertEquals(Requirements.hash().toString(), "hashCode");
+		assertEquals(Requirements.hash().toString(), "hash");
 		
 		assertTrue(Requirements.length().apply("abc").equals(3));
 		assertEquals(Requirements.length().toString(), "length");
 		
 		assertTrue(Requirements.keySet().apply(Collections.singletonMap(1, 7)).equals(Collections.singleton(1)));
-		assertEquals(Requirements.keySet().toString(), "keySet");
+		assertEquals(Requirements.keySet().toString(), "keys");
 		
 		assertTrue(Requirements.values().apply(Collections.singletonMap(1, 7)).equals(Collections.singleton(7)));
 		assertEquals(Requirements.values().toString(), "values");

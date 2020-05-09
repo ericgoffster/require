@@ -32,8 +32,8 @@ public final class Requirements {
 	 * a user supplied exception if it fails.    This is the most general form of "require".
 	 * 
 	 * Example:
-	 *     Require.require(null, Require.notNull(), (o, v) -> new MyException()) # throws MyException
-	 *     Require.require("abc", Require.notNull(), (o, v) -> new MyException()) == "abc"
+	 *     Require.require(null, Require.notNull(), (o, v) -&gt; new MyException()) # throws MyException
+	 *     Require.require("abc", Require.notNull(), (o, v) -&gt; new MyException()) == "abc"
 	 *     
 	 * @param <T> The type of the object being tested
 	 * @param <EX> The type of the exception that could be thrown.
@@ -53,8 +53,8 @@ public final class Requirements {
 	 * in that exception.
 	 * 
 	 * Example:
-	 *     Require.require(null, Require.notNull(), () -> "someobj") # throws IllegalArgumentException("someobj: Must not be null")
-	 *     Require.require("abc", Require.notNull(), () -> "someobj") == "abc"
+	 *     Require.require(null, Require.notNull(), () -&gt; "someobj") # throws IllegalArgumentException("someobj: Must not be null")
+	 *     Require.require("abc", Require.notNull(), () -&gt; "someobj") == "abc"
 	 *     
 	 * @param <T> The type of the object being tested
 	 * @param obj The object to verify
@@ -104,7 +104,7 @@ public final class Requirements {
 
 	/**
 	 * Returns a predicate that checks for its string argument to be not blank.
-	 * A string must be non-null and have a length > 0 to satisfy the condition.
+	 * A string must be non-null and have a length &gt; 0 to satisfy the condition.
 	 * 
 	 * Example:
 	 *     Require.require(null, Require.notBlank()) # throws IllegalArgumentException("Must not be blank")
@@ -194,7 +194,7 @@ public final class Requirements {
 	
 	/**
 	 * Returns a predicate that checks for its collection based argument to be not empty.
-	 * A collection must be non-null and have a size > 0 to satisfy the condition.
+	 * A collection must be non-null and have a size &gt; 0 to satisfy the condition.
 	 * 
 	 * Example:
 	 *     Require.require(null, Require.notEmpty()) # throws IllegalArgumentException("Must not be empty")
@@ -235,10 +235,10 @@ public final class Requirements {
 	 * Example:
 	 *     Require.require(null, Require.containKey(1)) # throws IllegalArgumentException("Must contain key 1")
 	 *     Require.require({}, Require.containKey(1)) # throws IllegalArgumentException("Must contain key 1")
-	 *     Require.require({a => 1, b => 2}, Require.containKey(c)) # throws IllegalArgumentException("Must contain 1")
-	 *     Require.require({a => 1, b => 2}, Require.containKey(a)) == {a => 1, b => 2}
+	 *     Require.require({a =&gt; 1, b =&gt; 2}, Require.containKey(c)) # throws IllegalArgumentException("Must contain 1")
+	 *     Require.require({a =&gt; 1, b =&gt; 2}, Require.containKey(a)) == {a =&gt; 1, b =&gt; 2}
 	 *     
-	 * @param object The object the collection must contain.
+	 * @param key The key the map must contain.
 	 * @param <K> The type of the keys of the map.
 	 * @param <V> The type of the values of the map.
 	 * @param <T> The Map type of the object being tested
@@ -255,7 +255,7 @@ public final class Requirements {
 	 * Example:
 	 *     Require.require(null, Require.mapNotEmpty()) # throws IllegalArgumentException("Must not be empty")
 	 *     Require.require({}, Require.mapNotEmpty()) # throws IllegalArgumentException("Must not be empty")
-	 *     Require.require({a => 1, b => 2}, Require.mapNotEmpty()) == {a => 1, b => 2}
+	 *     Require.require({a =&gt; 1, b =&gt; 2}, Require.mapNotEmpty()) == {a =&gt; 1, b =&gt; 2}
 	 *     
 	 * @param <K> The type of the keys of the map.
 	 * @param <V> The type of the values of the map.
@@ -343,8 +343,12 @@ public final class Requirements {
 	 * @param <T> The Collection type of the object being tested
 	 * @return a predicate that checks for its collection to be a superset of another collection
 	 */
-	public static <E, T extends Collection<? extends E>> Predicate<T> superSetOf(@SuppressWarnings("unchecked") E ... other) {
-		Set<E> setOther = new LinkedHashSet<>(Arrays.asList(requireInt(other, notNull())));
+	@SafeVarargs
+	public static <E, T extends Collection<? extends E>> Predicate<T> superSetOf(E ... other) {
+		Set<E> setOther = new LinkedHashSet<>();
+		for(E e: other) {
+			setOther.add(e);
+		}
 		return nameInt(collection -> collection != null && collection.containsAll(setOther), () -> String.format("Must be a superset of %s", setOther));
 	}
 
@@ -385,8 +389,12 @@ public final class Requirements {
 	 * @param <T> The Collection type of the object being tested
 	 * @return a predicate that checks for its collection to be a subset another collection
 	 */
-	public static <E, T extends Collection<? extends E>> Predicate<T> subSetOf(@SuppressWarnings("unchecked") E ... other) {
-		Set<E> setOther = new LinkedHashSet<>(Arrays.asList(requireInt(other, notNull())));
+	@SafeVarargs
+	public static <E, T extends Collection<? extends E>> Predicate<T> subSetOf(E ... other) {
+		Set<E> setOther = new LinkedHashSet<>();
+		for(E e: other) {
+			setOther.add(e);
+		}
 		return nameInt(collection -> collection != null && setOther.containsAll(collection), () -> String.format("Must be a subset of %s", setOther));
 	}
 	
@@ -405,8 +413,12 @@ public final class Requirements {
 	 * @param <T> The type of the object being tested
 	 * @return a predicate that checks for its object to be a member of a collection
 	 */
-	public static <T> Predicate<T> memberOf(@SuppressWarnings("unchecked") T ... coll) {
-		Set<T> setColl = new LinkedHashSet<>(Arrays.asList(requireInt(coll, notNull())));
+	@SafeVarargs
+	public static <T> Predicate<T> memberOf(T ... coll) {
+		Set<T> setColl = new LinkedHashSet<>();
+		for(T e: coll) {
+			setColl.add(e);
+		}
 		return nameInt(setColl::contains, () -> String.format("Must be a member of %s", setColl));
 	}
 	
@@ -857,7 +869,7 @@ public final class Requirements {
 	 * with predicates, giving nice messages when they fail.
 	 * 
 	 * Example:
-	 *     Require.name(someobj -> true, () -> "True").toString() == "True"
+	 *     Require.name(someobj -&gt; true, () -&gt; "True").toString() == "True"
 	 * 
 	 * @param <T> The type of the object being tested
 	 * @param pred The predicate to decorate with a message
@@ -872,7 +884,7 @@ public final class Requirements {
 	 * Pairs a string with the Map::values function.
 	 * 
 	 * Example:
-	 *     Require.values().apply({a => 1, b =>2}) == [1, 2]
+	 *     Require.values().apply({a =&gt; 1, b =&gt; 2}) == [1, 2]
 	 *     Require.values().toString() == "values"
 	 *     
 	 * @param <K> The Map key type
@@ -881,14 +893,14 @@ public final class Requirements {
 	 * @return a named function representing Map::values
 	 */
 	public static <K, V, T extends Map<? extends K,? extends V>> Function<T, Collection<? extends V>> values() {
-		return nameFInt(Map::values, () -> "values");
+		return nameFInt(m -> m.values(), () -> "values");
 	}
 
 	/**
 	 * Pairs a string with the Map::keySet function.
 	 * 
 	 * Example:
-	 *     Require.values().apply({a => 1, b =>2}) == [1, 2]
+	 *     Require.values().apply({a =&gt; 1, b =&gt;2}) == [1, 2]
 	 *     Require.values().toString() == "keys"
 	 *     
 	 * @param <K> The Map key type
@@ -897,14 +909,14 @@ public final class Requirements {
 	 * @return a named function representing Map::values
 	 */
 	public static <K, V, T extends Map<? extends K,? extends V>> Function<T, Set<? extends K>> keySet() {
-		return nameFInt(Map::keySet, () -> "keys");
+		return nameFInt(m -> m.keySet(), () -> "keys");
 	}
 
 	/**
 	 * Pairs a string with the Map::size function.
 	 * 
 	 * Example:
-	 *     Require.mapSize().apply({a => 1, b =>2}) == 2
+	 *     Require.mapSize().apply({a =&gt; 1, b =&gt; 2}) == 2
 	 *     Require.mapSize().toString() == "size"
 	 *     
 	 * @param <K> The Map key type
@@ -913,7 +925,7 @@ public final class Requirements {
 	 * @return a named function representing Map::size
 	 */
 	public static <K, V, T extends Map<? extends K,? extends V>> Function<T, Integer> mapSize() {
-		return nameFInt(Map::size, () -> "size");
+		return nameFInt(m -> m.size(), () -> "size");
 	}
 
 	/**
@@ -922,7 +934,8 @@ public final class Requirements {
 	 * Example:
 	 *     Require.stringify().apply(3) == "3"
 	 *     Require.stringify().toString() == "toString"
-	 *     
+	 *
+	 * @param <T> the type of the object being operated on
 	 * @return a named function representing Object::toString
 	 */
 	public static <T> Function<T, String> stringify() {
@@ -936,6 +949,7 @@ public final class Requirements {
 	 *     Require.hash().apply(o) == o.hashCode()
 	 *     Require.hash().toString() == "hash"
 	 *     
+	 * @param <T> the type of the object being operated on
 	 * @return a named function representing Object::hash
 	 */
 	public static <T> Function<T, Integer> hash() {
@@ -962,10 +976,12 @@ public final class Requirements {
 	 *     Require.size().apply([4,5]) == 2
 	 *     Require.size().toString() == "size"
 	 *     
+	 * @param <E> the type for the element of the collection
+	 * @param <T> the type of the object being operated on
 	 * @return a named function representing Collection::size
 	 */
 	public static <E, T extends Collection<? extends E>> Function<T, Integer> size() {
-		return nameFInt(Collection::size, () -> "size");
+		return nameFInt(c -> c.size(), () -> "size");
 	}
 
 	/**
@@ -973,7 +989,7 @@ public final class Requirements {
 	 * with predicates, giving nice messages when they fail.
 	 * 
 	 * Example:
-	 *     Require.nameF(String::length, () -> "Length").toString() == "Length"
+	 *     Require.nameF(String::length, () -&gt; "Length").toString() == "Length"
 	 *     
 	 * @param <T> The type being operated on by the function
 	 * @param <U> The return type of the function

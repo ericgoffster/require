@@ -1,4 +1,4 @@
-package org.granite.requirement;
+package org.granitesoft.requirement;
 
 import java.util.Arrays;
 import java.util.Collection;

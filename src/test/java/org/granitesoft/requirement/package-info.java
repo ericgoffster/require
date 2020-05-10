@@ -1,4 +1,4 @@
 /**
  * A package for testing the Requirements package.
  */
-package org.granite.requirement;
+package org.granitesoft.requirement;

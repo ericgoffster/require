@@ -11,10 +11,10 @@
  * Future versions of this library will only add new functionality, reserving old behavior, old signatures, etc.
  * Nothing will ever be deprecated.
  * <p>
- * This particular package has only one class of any note, {@link org.granite.requirement.Requirements}
+ * This particular package has only one class of any note, {@link org.granitesoft.requirement.Requirements}
  * It contains a library of requirements, and a mechanism for enforcing them.
  * <p>
  * Note that each requirement *is* something.   It does not *do* something.  This allows it to potentially
  * be used for all sorts of things (i.e.  json validation, unit test assertions, code level assertions, etc)
  */
-package org.granite.requirement;
+package org.granitesoft.requirement;

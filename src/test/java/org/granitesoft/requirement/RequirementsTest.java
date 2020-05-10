@@ -1,4 +1,4 @@
-package org.granite.requirement;
+package org.granitesoft.requirement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
+import org.granitesoft.requirement.Requirements;
 import org.junit.Test;
 
 /**

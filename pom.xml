@@ -4,6 +4,31 @@
    <groupId>org.granitesoft</groupId>
    <artifactId>requirement</artifactId>
    <version>1.2-SNAPSHOT</version>
+   <name>Requirement</name>
+   <url>https://github.com/ericgoffster/requirement</url>
+   <description>Java code for the requirement package.  The requirements package defines
+      a system for making requirements(or assertions) that can be used and packaged in a versatile ways.
+      Code is designed to be enterprise-ready with 100% backwards compatibility and an eye to being CVE-free.</description>
+   <licenses>
+     <license>
+       <name>Mozilla Public License Version 2.0</name>
+       <url>https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt</url>
+       <distribution>repo</distribution>
+       <comments>A business-friendly OSS license</comments>
+     </license>
+   </licenses>
+   <developers>
+      <developer>
+         <id>goffster</id>
+         <name>Eric Goff</name>
+         <email>goffster@gmail.com</email>
+         <roles>
+           <role>architect</role>
+           <role>developer</role>
+         </roles>
+         <timezone>America/Chicago</timezone>
+      </developer>
+   </developers>
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>

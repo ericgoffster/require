@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 /**
- * This class is a utility for making generalized requirements.
+ * Utility for making generalized requirements.
  * A thorough understanding of "lambda"'s is very helpful, but not strictly required.
  * See https://github.com/ericgoffster/requirement.
  * This code licensed under Mozilla Public License Version 2.0.

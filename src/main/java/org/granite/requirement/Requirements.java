@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
  * Utility for making generalized requirements.
  * A thorough understanding of "lambda"'s is very helpful, but not strictly required.
  * See https://github.com/ericgoffster/requirement.
+ * <p>
  * This code licensed under Mozilla Public License Version 2.0.
  * <p>
  * The primary place to start is here: {@link Requirements#require(Object, Predicate)}

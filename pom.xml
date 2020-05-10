@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.granite</groupId>
    <artifactId>requirement</artifactId>
-   <version>SNAPSHOT</version>
+   <version>1.0</version>
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
@@ -11,7 +11,7 @@
       <connection>scm:git:git://github.com/ericgoffster/requirement.git</connection>
       <developerConnection>scm:git:git@github.com:ericgoffster/requirement.git</developerConnection>
       <url>https://github.com/ericgoffster/requirement</url>
-      <tag>HEAD</tag>
+      <tag>requirement-1.0</tag>
    </scm>
    <dependencies>
       <dependency>

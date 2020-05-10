@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
  * A thorough understanding of "lambda"'s is very helpful, but not strictly required.
  * See https://github.com/ericgoffster/requirement.
  * This code licensed under Mozilla Public License Version 2.0.
+ * <p>
+ * The primary place to start is here: {@link Requirements#require(Object, Predicate)}
  */
 public final class Requirements {
 	private static final Predicate<?> NOT_NULL = nameInt(o -> o != null, () -> "Must not be null");

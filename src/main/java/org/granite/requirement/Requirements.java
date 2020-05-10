@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 /**
  * This code licensed under Mozilla Public License Version 2.0.
- * See attached text in this jar.
  * 
  * This class is a utility for making generalized requirements.
  * A thorough understanding of "lambda"'s is very helpful, but not strictly required.

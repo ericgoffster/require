@@ -14,7 +14,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
-import org.granitesoft.requirement.Requirements;
 import org.junit.Test;
 
 /**

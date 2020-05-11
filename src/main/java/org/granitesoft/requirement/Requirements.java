@@ -435,6 +435,69 @@ public final class Requirements {
 		}
 		return nameInt(collection -> collection != null && setOther.containsAll(collection), () -> String.format("Must be a subset of %s", setOther));
 	}
+
+	private static <E> boolean allMembers(Iterable<? extends E> collection, Predicate<E> memberTest) {
+		for(E member: collection) {
+			if (!memberTest.test(member)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns a predicate that checks for all its members to match <code>memberTest</code>.
+	 * A collection must be non-null and all of its members to match <code>memberTest</code>  to satisfy the condition.
+	 * 
+	 * <pre>
+	 * Example:
+	 *     Require.allMembers(null,       Require.notNull()) # throws IllegalArgumentException("All members: Must be not null")
+	 *     Require.allMembers([],         Require.notNull()) == []
+	 *     Require.allMembers([1],        Require.notNull()) == [1]
+	 *     Require.allMembers([1, null],  Require.notNull()) # throws IllegalArgumentException("All members: Must be not null")
+	 * </pre>
+	 *     
+	 * @param memberTest The predicate used to test members.
+	 * @param <E> The type of the elements in the collection.
+	 * @param <T> The Collection type of the object being tested
+	 * @return A predicate that checks for its collection to to match <code>memberTest</code>
+	 */
+	public static <E, T extends Iterable<? extends E>> Predicate<T> allMembers(Predicate<E> memberTest) {
+		requireInt(memberTest, notNull());
+		return nameInt( collection -> collection != null && allMembers(collection, memberTest), () -> String.format("All members: %s", memberTest));
+	}
+
+	private static <E> boolean anyMember(Iterable<? extends E> collection, Predicate<E> memberTest) {
+		for(E member: collection) {
+			if (memberTest.test(member)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns a predicate that checks for at least one its members to match <code>memberTest</code>.
+	 * A collection must be non-null and at least one its members matched <code>memberTest</code>  to satisfy the condition.
+	 * 
+	 * <pre>
+	 * Example:
+	 *     Require.anyMember(null,       Require.notNull()) # throws IllegalArgumentException("At least one member: Must be not null")
+	 *     Require.anyMember([],         Require.notNull()) # throws IllegalArgumentException("At least one member: Must be not null")
+	 *     Require.anyMember([1],        Require.notNull()) == [1]
+	 *     Require.anyMember([1, null],  Require.notNull()) == [1, null]
+	 *     Require.anyMember([null],  Require.notNull()) # throws IllegalArgumentException("At least one member: Must be not null")
+	 * </pre>
+	 *     
+	 * @param memberTest The predicate used to test members.
+	 * @param <E> The type of the elements in the collection.
+	 * @param <T> The Collection type of the object being tested
+	 * @return A predicate that checks for at least one its members to match <code>memberTest</code>
+	 */
+	public static <E, T extends Iterable<? extends E>> Predicate<T> anyMember(Predicate<E> memberTest) {
+		requireInt(memberTest, notNull());
+		return nameInt( collection -> collection != null && anyMember(collection, memberTest), () -> String.format("At least one member: %s", memberTest));
+	}
 	
 	/**
 	 * Returns a predicate that checks for its object to be a member of <code>arr</code>.
@@ -479,9 +542,13 @@ public final class Requirements {
 	 * @param <T> The type of the object being tested
 	 * @return A predicate that checks for its object to be a member of <code>coll</code>
 	 */
-	public static <T> Predicate<T> memberOf(Collection<? extends T> coll) {
+	public static <T> Predicate<T> memberOf(Iterable<? extends T> coll) {
 		requireInt(coll, notNull());
-		return nameInt(coll::contains, () -> String.format("Must be a member of %s", coll));
+		Set<T> setColl = new LinkedHashSet<>();
+		for(T e: coll) {
+			setColl.add(e);
+		}
+		return nameInt(setColl::contains, () -> String.format("Must be a member of %s", setColl));
 	}
 	
 	/**

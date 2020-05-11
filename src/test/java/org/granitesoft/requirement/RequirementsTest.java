@@ -322,6 +322,26 @@ public class RequirementsTest {
 		assertFalse(pred.test(8));
 	}
 	@Test
+	public void testAllMembers() {
+		Predicate<Iterable<Integer>> pred = Requirements.allMembers(Requirements.notNull());
+		assertEquals(pred.toString(),"All members: Must not be null");
+		assertFalse(pred.test(null));
+		assertTrue(pred.test(Arrays.asList(5,7)));
+		assertFalse(pred.test(Arrays.asList(5,null)));
+		assertTrue(pred.test(Arrays.asList()));
+		assertFalse(pred.test(Arrays.asList((Integer)null)));
+	}
+	@Test
+	public void testAnyMember() {
+		Predicate<Iterable<Integer>> pred = Requirements.anyMember(Requirements.notNull());
+		assertEquals(pred.toString(),"At least one member: Must not be null");
+		assertFalse(pred.test(null));
+		assertTrue(pred.test(Arrays.asList(5,7)));
+		assertTrue(pred.test(Arrays.asList(5,null)));
+		assertFalse(pred.test(Arrays.asList()));
+		assertFalse(pred.test(Arrays.asList((Integer)null)));
+	}
+	@Test
 	public void testMemberOf2() {
 		Predicate<Integer> pred = Requirements.memberOf(5, 7);
 		assertEquals(pred.toString(),"Must be a member of [5, 7]");

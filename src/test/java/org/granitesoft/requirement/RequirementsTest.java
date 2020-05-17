@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -113,20 +114,21 @@ public class RequirementsTest {
 	}
 	@Test
 	public void testNameF() {
-		Predicate<String> pred = Requirements.chain(Requirements.nameF(String::length,() -> "length"),Requirements.gt(2));
-		assertEquals(pred.toString(),"length: Must be greater than 2");
-		assertFalse(pred.test(""));
-		assertTrue(pred.test("   "));
+		assertEquals(Requirements.nameF(String::length,() -> "length").toString(),"length");
 		assertThrows(IllegalArgumentException.class, () -> Requirements.nameF(String::length,null));
 		assertThrows(IllegalArgumentException.class, () -> Requirements.nameF(null,() -> "length"));
 	}
 	@Test
 	public void testName() {
-		Predicate<String> pred = Requirements.chain(Requirements.nameF(String::length,() -> "length"),Requirements.name(Requirements.gt(2), () -> "gt2"));
-		assertFalse(pred.test(""));
-		assertTrue(pred.test("   "));
+		assertEquals(Requirements.name(Requirements.gt(2), () -> "gt2").toString(), "gt2");
 		assertThrows(IllegalArgumentException.class, () -> Requirements.name(Requirements.gt(2),null));
 		assertThrows(IllegalArgumentException.class, () -> Requirements.name(null,() -> "length"));
+	}
+	@Test
+	public void testNameC() {
+		assertEquals(Requirements.nameC(obj -> {}, () -> "cons").toString(), "cons");
+		assertThrows(IllegalArgumentException.class, () -> Requirements.nameC(obj -> {},null));
+		assertThrows(IllegalArgumentException.class, () -> Requirements.nameC(null,() -> "cons"));
 	}
 	@Test
 	public void testLt() {
@@ -188,7 +190,7 @@ public class RequirementsTest {
 	@Test
 	public void testNe() {
 		Predicate<Integer> pred = Requirements.ne(2);
-		assertEquals(pred.toString(),"Must be not equal to 2");
+		assertEquals(pred.toString(),"Must not be equal to 2");
 		assertTrue(pred.test(null));
 		assertTrue(pred.test(-1));
 		assertTrue(pred.test(0));
@@ -216,8 +218,42 @@ public class RequirementsTest {
 		}
 		@Override
 		public boolean equals(Object obj) {
+			if (obj == null) {
+				return false;
+			}
+			if (obj.getClass() != Foo.class) {
+				return false;
+			}
 			return true;
 		}
+	}
+	@Test
+	public void testRemoveMust() {
+		assertEquals(Requirements.removeMust("Mus"), "Mus");
+		assertEquals(Requirements.removeMust(""), "");
+		assertEquals(Requirements.removeMust("Must"), "Must");
+		assertEquals(Requirements.removeMust("Must "), "Must ");
+		assertEquals(Requirements.removeMust("Must XYZ"), "XYZ");
+		assertEquals(Requirements.removeMust("Must xyz"), "Xyz");
+		assertEquals(Requirements.removeMust("Must xyzMust abc"), "XyzAbc");
+		assertEquals(Requirements.removeMust("Must xyzMust "), "XyzMust ");
+		assertEquals(Requirements.removeMust("MMust a"), "MA");
+	}
+	@Test
+	public void testAllMembersInt() {
+		assertTrue(Requirements.<Integer,List<Integer>>allMembers(i -> i > 2).test(Arrays.asList(4 ,5)));
+		assertTrue(Requirements.<Integer,List<Integer>>allMembers(i -> i > 2).test(Arrays.asList(5)));
+		assertTrue(Requirements.<Integer,List<Integer>>allMembers(i -> i > 2).test(Arrays.asList()));
+		assertFalse(Requirements.<Integer,List<Integer>>allMembers(i -> i > 2).test(Arrays.asList(1)));
+		assertFalse(Requirements.<Integer,List<Integer>>allMembers(i -> i > 2).test(Arrays.asList(5, 1)));
+	}
+	@Test
+	public void testAnyMembersInt() {
+		assertTrue(Requirements.<Integer,List<Integer>>anyMember(i -> i > 2).test(Arrays.asList(4 ,5)));
+		assertTrue(Requirements.<Integer,List<Integer>>anyMember(i -> i > 2).test(Arrays.asList(5)));
+		assertFalse(Requirements.<Integer,List<Integer>>anyMember(i -> i > 2).test(Arrays.asList()));
+		assertFalse(Requirements.<Integer,List<Integer>>anyMember(i -> i > 2).test(Arrays.asList(1)));
+		assertTrue(Requirements.<Integer,List<Integer>>anyMember(i -> i > 2).test(Arrays.asList(5, 1)));
 	}
 	@Test
 	public void testSame() {
@@ -232,7 +268,7 @@ public class RequirementsTest {
 	@Test
 	public void testAnd() {
 		Predicate<Integer> pred = Requirements.and(Requirements.ge(2),Requirements.le(5));
-		assertEquals(pred.toString(),"(Must be greater than or equal to 2) and (Must be less than or equal to 5)");
+		assertEquals(pred.toString(),"Must (Be greater than or equal to 2) and (Be less than or equal to 5)");
 		assertFalse(pred.test(null));
 		assertFalse(pred.test(1));
 		assertTrue(pred.test(2));
@@ -246,7 +282,7 @@ public class RequirementsTest {
 	@Test
 	public void testOr() {
 		Predicate<Integer> pred = Requirements.or(Requirements.le(2),Requirements.ge(5));
-		assertEquals(pred.toString(),"(Must be less than or equal to 2) or (Must be greater than or equal to 5)");
+		assertEquals(pred.toString(),"Must (Be less than or equal to 2) or (Be greater than or equal to 5)");
 		assertTrue(pred.test(null));
 		assertTrue(pred.test(1));
 		assertTrue(pred.test(2));
@@ -260,13 +296,44 @@ public class RequirementsTest {
 	@Test
 	public void testNegate() {
 		Predicate<Integer> pred = Requirements.negate(Requirements.equalTo(2));
-		assertEquals(pred.toString(),"not (Must be equal to 2)");
+		assertEquals(pred.toString(),"Must not (Be equal to 2)");
 		assertTrue(pred.test(1));
 		assertFalse(pred.test(2));
 		assertTrue(pred.test(null));
 		assertFalse(Requirements.negate(pred).test(1));
 		assertTrue(Requirements.negate(pred).test(2));
 		assertFalse(Requirements.negate(pred).test(null));
+	}
+	@Test
+	public void testIfThen() {
+		assertThrows(IllegalArgumentException.class, () -> Requirements.ifThen(null, Requirements.le(2)));
+		assertThrows(IllegalArgumentException.class, () -> Requirements.ifThen(Requirements.le(2), null));
+		Predicate<Integer> pred = Requirements.ifThen(Requirements.notNull(), Requirements.gt(2));
+		assertEquals(pred.toString(), "if (Not be null) then (Must be greater than 2)");
+		assertTrue(pred.test(null));
+		assertFalse(pred.test(1));
+		assertFalse(pred.test(2));
+		assertTrue(pred.test(3));
+	}
+	@Test
+	public void testIfThenElse() {
+		assertThrows(IllegalArgumentException.class, () -> Requirements.ifThenElse(null, Requirements.le(2), Requirements.le(2)));
+		assertThrows(IllegalArgumentException.class, () -> Requirements.ifThenElse(Requirements.le(2), null, Requirements.le(2)));
+		assertThrows(IllegalArgumentException.class, () -> Requirements.ifThenElse(Requirements.le(2), Requirements.le(2), null));
+		Predicate<String> pred = Requirements.ifThenElse(Requirements.chain(Requirements.length(), Requirements.eq(2)),
+				Requirements.equalTo("ab"), Requirements.equalTo("abc"));
+		assertEquals(pred.toString(), "if (length: Be equal to 2) then (Must be equal to ab) else (Must be equal to abc)");
+		assertTrue(pred.test("ab"));
+		assertTrue(pred.test("abc"));
+		assertFalse(pred.test("abcd"));
+		assertFalse(pred.test("a"));
+	}
+	@Test
+	public void testNotThrowException() {
+		Predicate<String> pred = Requirements.doesNotThrowException(Requirements.nameC(obj -> { if (obj.equals("throw")) throw new RuntimeException(); }, () -> "msg"));
+		assertEquals(pred.toString(), "msg: Must not throw an exception");
+		assertTrue(pred.test("abc"));
+		assertFalse(pred.test("throw"));
 	}
 	@Test
 	public void testContains() {
@@ -371,6 +438,15 @@ public class RequirementsTest {
 		assertFalse(pred.test(Arrays.asList(5)));
 		assertFalse(pred.test(Collections.emptyList()));
 		assertFalse(pred.test(null));
+	}
+	@Test
+	public void testCompare() {
+		assertTrue(Requirements.compare(null, 2) < 0);
+		assertTrue(Requirements.compare(2, null) > 0);
+		assertTrue(Requirements.compare(null, null) == 0);
+		assertTrue(Requirements.compare(1, 2) < 0);
+		assertTrue(Requirements.compare(2, 1) > 0);
+		assertTrue(Requirements.compare(2, 2) == 0);
 	}
 	@Test
 	public void testFunctions() {

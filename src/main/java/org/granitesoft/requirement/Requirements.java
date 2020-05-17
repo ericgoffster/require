@@ -34,8 +34,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,  Require.notNull(), (o, v) -&gt; new MyException()) # throws MyException
-	 *     Require.require("abc", Require.notNull(), (o, v) -&gt; new MyException()) == "abc"
+	 *     Requirements.require(null,  Requirements.notNull(), (o, v) -&gt; new Exception()) # throws MyException
+	 *     Requirements.require("abc", Requirements.notNull(), (o, v) -&gt; new Exception()) == "abc"
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -57,8 +57,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,  Require.notNull(), () -&gt; "someobj") # throws IllegalArgumentException("someobj: Must not be null")
-	 *     Require.require("abc", Require.notNull(), () -&gt; "someobj") == "abc"
+	 *     Requirements.require(null,  Requirements.notNull(), () -&gt; "someobj") # throws IllegalArgumentException("someobj: Must not be null")
+	 *     Requirements.require("abc", Requirements.notNull(), () -&gt; "someobj") == "abc"
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -78,8 +78,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,  Require.notNull()) # throws IllegalArgumentException("Must not be null")
-	 *     Require.require("abc", Require.notNull())  == "abc"
+	 *     Requirements.require(null,  Requirements.notNull()) # throws IllegalArgumentException("Must not be null")
+	 *     Requirements.require("abc", Requirements.notNull())  == "abc"
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -98,8 +98,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,  Require.notNull()) # throws IllegalArgumentException("Must not be null")
-	 *     Require.require("abc", Require.notNull())  == "abc"
+	 *     Requirements.require(null,  Requirements.notNull()) # throws IllegalArgumentException("Must not be null")
+	 *     Requirements.require("abc", Requirements.notNull())  == "abc"
 	 * </pre>
 	 * 
 	 * @param <T> The type of the object being tested
@@ -116,9 +116,9 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,  Require.notBlank()) # throws IllegalArgumentException("Must not be blank")
-	 *     Require.require("",    Require.notBlank()) # throws IllegalArgumentException("Must not be blank")
-	 *     Require.require("abc", Require.notBlank())  == "abc"
+	 *     Requirements.require(null,  Requirements.notBlank()) # throws IllegalArgumentException("Must not be blank")
+	 *     Requirements.require("",    Requirements.notBlank()) # throws IllegalArgumentException("Must not be blank")
+	 *     Requirements.require("abc", Requirements.notBlank())  == "abc"
 	 * </pre>
 	 * 
 	 * @return A predicate that checks for its string argument to be not blank
@@ -133,10 +133,10 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,  Require.minLength(2)) # throws IllegalArgumentException("Must have a length of at least 2")
-	 *     Require.require("",    Require.minLength(2)) # throws IllegalArgumentException("Must have a length of at least 2")
-	 *     Require.require("ab",  Require.minLength(2))  == "ab"
-	 *     Require.require("abc", Require.minLength(2))  == "abc"
+	 *     Requirements.require(null,  Requirements.minLength(2)) # throws IllegalArgumentException("Must have a length of at least 2")
+	 *     Requirements.require("",    Requirements.minLength(2)) # throws IllegalArgumentException("Must have a length of at least 2")
+	 *     Requirements.require("ab",  Requirements.minLength(2))  == "ab"
+	 *     Requirements.require("abc", Requirements.minLength(2))  == "abc"
 	 * </pre>
 	 * 
 	 * @param n The minimum length - Must be &gt;= 0
@@ -153,10 +153,10 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,  Require.maxLength(2)) # throws IllegalArgumentException("Must have a length of at most 2")
-	 *     Require.require("",    Require.maxLength(2)) == ""
-	 *     Require.require("ab",  Require.maxLength(2))  == "ab"
-	 *     Require.require("abc", Require.maxLength(2)) # throws IllegalArgumentException("Must have a length of at most 2")
+	 *     Requirements.require(null,  Requirements.maxLength(2)) # throws IllegalArgumentException("Must have a length of at most 2")
+	 *     Requirements.require("",    Requirements.maxLength(2)) == ""
+	 *     Requirements.require("ab",  Requirements.maxLength(2))  == "ab"
+	 *     Requirements.require("abc", Requirements.maxLength(2)) # throws IllegalArgumentException("Must have a length of at most 2")
 	 * </pre>
 	 * 
 	 * @param n The maximum length - Must be &gt;= 0
@@ -173,11 +173,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,     Require.matches(Pattern.compile("\\d+"))) # throws IllegalArgumentException("Must match \d+")
-	 *     Require.require("",       Require.matches(Pattern.compile("\\d+"))) # throws IllegalArgumentException("Must match \d+")
-	 *     Require.require("1",      Require.matches(Pattern.compile("\\d+")))  == "1"
-	 *     Require.require("123",    Require.matches(Pattern.compile("\\d+")))  == "123"
-	 *     Require.require("abc123", Require.matches(Pattern.compile("\\d+"))) # throws IllegalArgumentException("Must match \d+")
+	 *     Requirements.require(null,     Requirements.matches(Pattern.compile("^\\d+$"))) # throws IllegalArgumentException("Must match ^\d+$")
+	 *     Requirements.require("",       Requirements.matches(Pattern.compile("^\\d+$"))) # throws IllegalArgumentException("Must match ^\d+$")
+	 *     Requirements.require("1",      Requirements.matches(Pattern.compile("^\\d+$")))  == "1"
+	 *     Requirements.require("123",    Requirements.matches(Pattern.compile("^\\d+$")))  == "123"
+	 *     Requirements.require("abc123", Requirements.matches(Pattern.compile("^\\d+$"))) # throws IllegalArgumentException("Must match ^\d+$")
 	 * </pre>
 	 *     
 	 * @param p The pattern - Can't be null
@@ -194,11 +194,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,     Require.matches("\\d+")) # throws IllegalArgumentException("Must match \d+")
-	 *     Require.require("",       Require.matches("\\d+")) # throws IllegalArgumentException("Must match \d+")
-	 *     Require.require("1",      Require.matches("\\d+"))  == "1"
-	 *     Require.require("123",    Require.matches("\\d+"))  == "123"
-	 *     Require.require("abc123", Require.matches("\\d+")) # throws IllegalArgumentException("Must match \d+")
+	 *     Requirements.require(null,     Requirements.matches("\\d+")) # throws IllegalArgumentException("Must match \d+")
+	 *     Requirements.require("",       Requirements.matches("\\d+")) # throws IllegalArgumentException("Must match \d+")
+	 *     Requirements.require("1",      Requirements.matches("\\d+"))  == "1"
+	 *     Requirements.require("123",    Requirements.matches("\\d+"))  == "123"
+	 *     Requirements.require("abc123", Requirements.matches("\\d+")) == "abc123"
 	 * </pre>
 	 *     
 	 * @param p The pattern - Can't be null
@@ -216,9 +216,9 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,   Require.notEmpty()) # throws IllegalArgumentException("Must not be empty")
-	 *     Require.require([],     Require.notEmpty()) # throws IllegalArgumentException("Must not be empty")
-	 *     Require.require([1, 2], Require.notEmpty()) == [1, 2]
+	 *     Requirements.require(null,   Requirements.notEmpty()) # throws IllegalArgumentException("Must not be empty")
+	 *     Requirements.require([],     Requirements.notEmpty()) # throws IllegalArgumentException("Must not be empty")
+	 *     Requirements.require([1, 2], Requirements.notEmpty()) == [1, 2]
 	 * </pre>
 	 *     
 	 * @param <E> The type of the elements of the collection
@@ -235,10 +235,10 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,   Require.contains(1)) # throws IllegalArgumentException("Must contain 1")
-	 *     Require.require([],     Require.contains(1)) # throws IllegalArgumentException("Must contain 1")
-	 *     Require.require([2, 3], Require.contains(1)) # throws IllegalArgumentException("Must contain 1")
-	 *     Require.require([1, 2], Require.contains(1)) == [1]
+	 *     Requirements.require(null,   Requirements.contains(1)) # throws IllegalArgumentException("Must contain 1")
+	 *     Requirements.require([],     Requirements.contains(1)) # throws IllegalArgumentException("Must contain 1")
+	 *     Requirements.require([2, 3], Requirements.contains(1)) # throws IllegalArgumentException("Must contain 1")
+	 *     Requirements.require([1, 2], Requirements.contains(1)) == [1]
 	 * </pre>
 	 *     
 	 * @param val The object the collection must contain - Can be null
@@ -256,10 +256,10 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,             Require.containsKey(1)) # throws IllegalArgumentException("Must contain key 1")
-	 *     Require.require({},               Require.containsKey(1)) # throws IllegalArgumentException("Must contain key 1")
-	 *     Require.require({a =&gt; 1, b =&gt; 2}, Require.containsKey(c)) # throws IllegalArgumentException("Must contain 1")
-	 *     Require.require({a =&gt; 1, b =&gt; 2}, Require.containsKey(a)) == {a =&gt; 1, b =&gt; 2}
+	 *     Requirements.require(null,             Requirements.containsKey(1)) # throws IllegalArgumentException("Must contain key 1")
+	 *     Requirements.require({},               Requirements.containsKey(1)) # throws IllegalArgumentException("Must contain key 1")
+	 *     Requirements.require({a=1, b=2}, Requirements.containsKey("c")) # throws IllegalArgumentException("Must contain key c")
+	 *     Requirements.require({a=1, b=2}, Requirements.containsKey("a")) == {a=1, b=2}
 	 * </pre>
 	 *     
 	 * @param key The key the map must contain - Can be null
@@ -278,9 +278,9 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,             Require.mapNotEmpty()) # throws IllegalArgumentException("Must not be empty")
-	 *     Require.require({},               Require.mapNotEmpty()) # throws IllegalArgumentException("Must not be empty")
-	 *     Require.require({a =&gt; 1, b =&gt; 2}, Require.mapNotEmpty()) == {a =&gt; 1, b =&gt; 2}
+	 *     Requirements.require(null,             Requirements.mapNotEmpty()) # throws IllegalArgumentException("Must not be empty")
+	 *     Requirements.require({},               Requirements.mapNotEmpty()) # throws IllegalArgumentException("Must not be empty")
+	 *     Requirements.require({a=1, b=2}, Requirements.mapNotEmpty()) == {a=1, b=2}
 	 * </pre>
 	 *     
 	 * @param <K> The type of the keys of the map
@@ -298,10 +298,10 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.minSize(2)) # throws IllegalArgumentException("Must have a size of at least 2")
-	 *     Require.require([],        Require.minSize(2)) # throws IllegalArgumentException("Must have a size of at least 2")
-	 *     Require.require([1, 2],    Require.minSize(2)) == [1, 2]
-	 *     Require.require([1, 2, 3], Require.minSize(2))  == [1, 2, 3]
+	 *     Requirements.require(null,      Requirements.minSize(2)) # throws IllegalArgumentException("Must have a size of at least 2")
+	 *     Requirements.require([],        Requirements.minSize(2)) # throws IllegalArgumentException("Must have a size of at least 2")
+	 *     Requirements.require([1, 2],    Requirements.minSize(2)) == [1, 2]
+	 *     Requirements.require([1, 2, 3], Requirements.minSize(2))  == [1, 2, 3]
 	 * </pre>
 	 * 
 	 * @param <E> The element type of the collection
@@ -320,10 +320,10 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.maxSize(2)) # throws IllegalArgumentException("Must have a size of at most 2")
-	 *     Require.require([],        Require.maxSize(2)) == []
-	 *     Require.require([1, 2],    Require.maxSize(2)) == [1, 2]
-	 *     Require.require([1, 2, 3], Require.maxSize(2)) # throws IllegalArgumentException("Must have a size of at most 2")
+	 *     Requirements.require(null,      Requirements.maxSize(2)) # throws IllegalArgumentException("Must have a size of at most 2")
+	 *     Requirements.require([],        Requirements.maxSize(2)) == []
+	 *     Requirements.require([1, 2],    Requirements.maxSize(2)) == [1, 2]
+	 *     Requirements.require([1, 2, 3], Requirements.maxSize(2)) # throws IllegalArgumentException("Must have a size of at most 2")
 	 * </pre>
 	 * 
 	 * @param <E> The element type of the collection
@@ -342,11 +342,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.superSetOf([1, 2])) # throws IllegalArgumentException("Must be superset of [1, 2]")
-	 *     Require.require([],        Require.superSetOf([1, 2])) # throws IllegalArgumentException("Must be superset of [1, 2]")
-	 *     Require.require([1],       Require.superSetOf([1, 2])) # throws IllegalArgumentException("Must be superset of [1, 2]")
-	 *     Require.require([1, 2],    Require.superSetOf([1, 2])) == [1, 2]
-	 *     Require.require([1, 2, 3], Require.superSetOf([1, 2])) == [1, 2, 3]
+	 *     Requirements.require(null,      Requirements.superSetOf([1, 2])) # throws IllegalArgumentException("Must be superset of [1, 2]")
+	 *     Requirements.require([],        Requirements.superSetOf([1, 2])) # throws IllegalArgumentException("Must be superset of [1, 2]")
+	 *     Requirements.require([1],       Requirements.superSetOf([1, 2])) # throws IllegalArgumentException("Must be superset of [1, 2]")
+	 *     Requirements.require([1, 2],    Requirements.superSetOf([1, 2])) == [1, 2]
+	 *     Requirements.require([1, 2, 3], Requirements.superSetOf([1, 2])) == [1, 2, 3]
 	 * </pre>
 	 *  
 	 * @param coll The collection to test against - Can't be null
@@ -365,11 +365,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, 2]")
-	 *     Require.require([],        Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, 2]")
-	 *     Require.require([1],       Require.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, ]}")
-	 *     Require.require([1, 2],    Require.superSetOf(1, 2)) == [1, 2]
-	 *     Require.require([1, 2, 3], Require.superSetOf(1, 2)) == [1, 2, 3]
+	 *     Requirements.require(null,      Requirements.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, 2]")
+	 *     Requirements.require([],        Requirements.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, 2]")
+	 *     Requirements.require([1],       Requirements.superSetOf(1, 2)) # throws IllegalArgumentException("Must be superset of [1, ]}")
+	 *     Requirements.require([1, 2],    Requirements.superSetOf(1, 2)) == [1, 2]
+	 *     Requirements.require([1, 2, 3], Requirements.superSetOf(1, 2)) == [1, 2, 3]
 	 * </pre>
 	 *  
 	 * @param arr The collection to test against - Can't be null
@@ -392,11 +392,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.subSetOf([1, 2])) # throws IllegalArgumentException("Must be subset of [1, 2]")
-	 *     Require.require([],        Require.subSetOf([1, 2])) == []
-	 *     Require.require([1],       Require.subSetOf([1, 2])) == [1]
-	 *     Require.require([1, 2],    Require.subSetOf([1, 2])) == [1, 2]
-	 *     Require.require([1, 2, 3], Require.subSetOf([1, 2])) # throws IllegalArgumentException("Must be subset of [1, 2]")
+	 *     Requirements.require(null,      Requirements.subSetOf([1, 2])) # throws IllegalArgumentException("Must be subset of [1, 2]")
+	 *     Requirements.require([],        Requirements.subSetOf([1, 2])) == []
+	 *     Requirements.require([1],       Requirements.subSetOf([1, 2])) == [1]
+	 *     Requirements.require([1, 2],    Requirements.subSetOf([1, 2])) == [1, 2]
+	 *     Requirements.require([1, 2, 3], Requirements.subSetOf([1, 2])) # throws IllegalArgumentException("Must be subset of [1, 2]")
 	 * </pre>
 	 *     
 	 * @param coll The collection to test against - Can't be null
@@ -415,11 +415,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of [1, 2]")
-	 *     Require.require([],        Require.subSetOf(1, 2)) == []
-	 *     Require.require([1],       Require.subSetOf(1, 2)) == [1]
-	 *     Require.require([1, 2],    Require.subSetOf(1, 2)) == [1, 2]
-	 *     Require.require([1, 2, 3], Require.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of [1, 2]")
+	 *     Requirements.require(null,      Requirements.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of [1, 2]")
+	 *     Requirements.require([],        Requirements.subSetOf(1, 2)) == []
+	 *     Requirements.require([1],       Requirements.subSetOf(1, 2)) == [1]
+	 *     Requirements.require([1, 2],    Requirements.subSetOf(1, 2)) == [1, 2]
+	 *     Requirements.require([1, 2, 3], Requirements.subSetOf(1, 2)) # throws IllegalArgumentException("Must be subset of [1, 2]")
 	 * </pre>
 	 *     
 	 * @param arr The collection to test against - Can't be null
@@ -436,25 +436,16 @@ public final class Requirements {
 		return nameInt(collection -> collection != null && setOther.containsAll(collection), () -> String.format("Must be a subset of %s", setOther));
 	}
 
-	private static <E> boolean allMembers(Iterable<? extends E> collection, Predicate<E> memberTest) {
-		for(E member: collection) {
-			if (!memberTest.test(member)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	/**
 	 * Returns a predicate that checks for all its members to match <code>memberTest</code>.
 	 * A collection must be non-null and all of its members to match <code>memberTest</code>  to satisfy the condition.
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.allMembers(null,       Require.notNull()) # throws IllegalArgumentException("All members: Must be not null")
-	 *     Require.allMembers([],         Require.notNull()) == []
-	 *     Require.allMembers([1],        Require.notNull()) == [1]
-	 *     Require.allMembers([1, null],  Require.notNull()) # throws IllegalArgumentException("All members: Must be not null")
+	 *     Requirements.require(null,      Requirements.allMembers(Requirements.notNull()) # throws IllegalArgumentException("All members: Must not be null")
+	 *     Requirements.require([],        Requirements.allMembers(Requirements.notNull()) == []
+	 *     Requirements.require([1],       Requirements.allMembers(Requirements.notNull()) == [1]
+	 *     Requirements.require([1, null], Requirements.allMembers(Requirements.notNull()) # throws IllegalArgumentException("All members: Must not be null")
 	 * </pre>
 	 *     
 	 * @param memberTest The predicate used to test members.
@@ -467,26 +458,17 @@ public final class Requirements {
 		return nameInt( collection -> collection != null && allMembers(collection, memberTest), () -> String.format("All members: %s", memberTest));
 	}
 
-	private static <E> boolean anyMember(Iterable<? extends E> collection, Predicate<E> memberTest) {
-		for(E member: collection) {
-			if (memberTest.test(member)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	/**
 	 * Returns a predicate that checks for at least one its members to match <code>memberTest</code>.
 	 * A collection must be non-null and at least one its members matched <code>memberTest</code>  to satisfy the condition.
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.anyMember(null,       Require.notNull()) # throws IllegalArgumentException("At least one member: Must be not null")
-	 *     Require.anyMember([],         Require.notNull()) # throws IllegalArgumentException("At least one member: Must be not null")
-	 *     Require.anyMember([1],        Require.notNull()) == [1]
-	 *     Require.anyMember([1, null],  Require.notNull()) == [1, null]
-	 *     Require.anyMember([null],  Require.notNull()) # throws IllegalArgumentException("At least one member: Must be not null")
+	 *     Requirements.require(null,       Requirements.anyMember(Requirements.notNull()) # throws IllegalArgumentException("At least one member: Must not be null")
+	 *     Requirements.require([],         Requirements.anyMember(Requirements.notNull()) # throws IllegalArgumentException("At least one member: Must not be null")
+	 *     Requirements.require([1],        Requirements.anyMember(Requirements.notNull()) == [1]
+	 *     Requirements.require([1, null],  Requirements.anyMember(Requirements.notNull()) == [1, null]
+	 *     Requirements.require([null],     Requirements.anyMember(Requirements.notNull()) # throws IllegalArgumentException("At least one member: Must not be null")
 	 * </pre>
 	 *     
 	 * @param memberTest The predicate used to test members.
@@ -505,11 +487,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.memberOf([])    ) # throws IllegalArgumentException("Must be a member of {}")
-	 *     Require.require(null, Require.memberOf([null])) == null
-	 *     Require.require(null, Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
-	 *     Require.require(1,    Require.memberOf([1, 2])) == 1
-	 *     Require.require(3,    Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
+	 *     Requirements.require(null, Requirements.memberOf([])    ) # throws IllegalArgumentException("Must be a member of []")
+	 *     Requirements.require(null, Requirements.memberOf([null])) == null
+	 *     Requirements.require(null, Requirements.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
+	 *     Requirements.require(1,    Requirements.memberOf([1, 2])) == 1
+	 *     Requirements.require(3,    Requirements.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
 	 * </pre>
 	 *     
 	 * @param arr The collection that must contain the object - Can't be null
@@ -531,11 +513,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.memberOf([])    ) # throws IllegalArgumentException("Must be a member of []")
-	 *     Require.require(null, Require.memberOf([null])) == null
-	 *     Require.require(null, Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
-	 *     Require.require(1,    Require.memberOf([1, 2])) == 1
-	 *     Require.require(3,    Require.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
+	 *     Requirements.require(null, Requirements.memberOf([])    ) # throws IllegalArgumentException("Must be a member of []")
+	 *     Requirements.require(null, Requirements.memberOf([null])) == null
+	 *     Requirements.require(null, Requirements.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
+	 *     Requirements.require(1,    Requirements.memberOf([1, 2])) == 1
+	 *     Requirements.require(3,    Requirements.memberOf([1, 2])) # throws IllegalArgumentException("Must be a member of [1, 2]")
 	 * </pre>
 	 *     
 	 * @param coll The collection that must contain the object - Can't be null
@@ -558,11 +540,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.lt(null)) # throws IllegalArgumentException("Must be less than null")
-	 *     Require.require(null, Require.lt(2)   ) == null
-	 *     Require.require(1,    Require.lt(2)   ) == 1
-	 *     Require.require(2,    Require.lt(2)   ) # throws IllegalArgumentException("Must be less than 2")
-	 *     Require.require(3,    Require.lt(2)   ) # throws IllegalArgumentException("Must be less than 2")
+	 *     Requirements.require(null, Requirements.lt(null)) # throws IllegalArgumentException("Must be less than null")
+	 *     Requirements.require(null, Requirements.lt(2)   ) == null
+	 *     Requirements.require(1,    Requirements.lt(2)   ) == 1
+	 *     Requirements.require(2,    Requirements.lt(2)   ) # throws IllegalArgumentException("Must be less than 2")
+	 *     Requirements.require(3,    Requirements.lt(2)   ) # throws IllegalArgumentException("Must be less than 2")
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -580,11 +562,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.gt(null)) # throws IllegalArgumentException("Must be greater than null")
-	 *     Require.require(null, Require.gt(2)   ) # throws IllegalArgumentException("Must be greater than 2")
-	 *     Require.require(1,    Require.gt(2)   ) # throws IllegalArgumentException("Must be greater than 2")
-	 *     Require.require(2,    Require.gt(2)   ) # throws IllegalArgumentException("Must be greater than 2")
-	 *     Require.require(3,    Require.gt(2)   ) == 3
+	 *     Requirements.require(null, Requirements.gt(null)) # throws IllegalArgumentException("Must be greater than null")
+	 *     Requirements.require(null, Requirements.gt(2)   ) # throws IllegalArgumentException("Must be greater than 2")
+	 *     Requirements.require(1,    Requirements.gt(2)   ) # throws IllegalArgumentException("Must be greater than 2")
+	 *     Requirements.require(2,    Requirements.gt(2)   ) # throws IllegalArgumentException("Must be greater than 2")
+	 *     Requirements.require(3,    Requirements.gt(2)   ) == 3
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -602,11 +584,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.le(null)) == null
-	 *     Require.require(null, Require.le(2)   ) == null
-	 *     Require.require(1,    Require.le(2)   ) == 1
-	 *     Require.require(2,    Require.le(2)   ) == 2
-	 *     Require.require(3,    Require.le(2)   ) # throws IllegalArgumentException("Must be less than or equal to 2")
+	 *     Requirements.require(null, Requirements.le(null)) == null
+	 *     Requirements.require(null, Requirements.le(2)   ) == null
+	 *     Requirements.require(1,    Requirements.le(2)   ) == 1
+	 *     Requirements.require(2,    Requirements.le(2)   ) == 2
+	 *     Requirements.require(3,    Requirements.le(2)   ) # throws IllegalArgumentException("Must be less than or equal to 2")
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -624,11 +606,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.ge(null)) == null
-	 *     Require.require(null, Require.ge(2)   ) # throws IllegalArgumentException("Must be greater than or equal to 2")
-	 *     Require.require(1,    Require.ge(2)   ) # throws IllegalArgumentException("Must be greater than or equal to 2")
-	 *     Require.require(2,    Require.ge(2)   ) == 2
-	 *     Require.require(3,    Require.ge(2)   ) == 3
+	 *     Requirements.require(null, Requirements.ge(null)) == null
+	 *     Requirements.require(null, Requirements.ge(2)   ) # throws IllegalArgumentException("Must be greater than or equal to 2")
+	 *     Requirements.require(1,    Requirements.ge(2)   ) # throws IllegalArgumentException("Must be greater than or equal to 2")
+	 *     Requirements.require(2,    Requirements.ge(2)   ) == 2
+	 *     Requirements.require(3,    Requirements.ge(2)   ) == 3
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -646,11 +628,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.eq(null)) == null
-	 *     Require.require(null, Require.eq(2)   ) # throws IllegalArgumentException("Must be equal to 2")
-	 *     Require.require(1,    Require.eq(2)   ) # throws IllegalArgumentException("Must be equal to 2")
-	 *     Require.require(2,    Require.eq(2)   ) == 2
-	 *     Require.require(3,    Require.eq(2)   ) # throws IllegalArgumentException("Must be equal to 2")
+	 *     Requirements.require(null, Requirements.eq(null)) == null
+	 *     Requirements.require(null, Requirements.eq(2)   ) # throws IllegalArgumentException("Must be equal to 2")
+	 *     Requirements.require(1,    Requirements.eq(2)   ) # throws IllegalArgumentException("Must be equal to 2")
+	 *     Requirements.require(2,    Requirements.eq(2)   ) == 2
+	 *     Requirements.require(3,    Requirements.eq(2)   ) # throws IllegalArgumentException("Must be equal to 2")
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -668,11 +650,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.ne(null)) # throws IllegalArgumentException("Must be not equal to null")
-	 *     Require.require(null, Require.ne(2)   ) == null
-	 *     Require.require(1,    Require.ne(2)   ) == 1
-	 *     Require.require(2,    Require.ne(2)   ) # throws IllegalArgumentException("Must be not equal to 2")
-	 *     Require.require(3,    Require.ne(2)   ) == 3
+	 *     Requirements.require(null, Requirements.ne(null)) # throws IllegalArgumentException("Must not be equal to null")
+	 *     Requirements.require(null, Requirements.ne(2)   ) == null
+	 *     Requirements.require(1,    Requirements.ne(2)   ) == 1
+	 *     Requirements.require(2,    Requirements.ne(2)   ) # throws IllegalArgumentException("Must not be equal to 2")
+	 *     Requirements.require(3,    Requirements.ne(2)   ) == 3
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -680,7 +662,7 @@ public final class Requirements {
 	 * @return A predicate that checks for its object to be <code>!= val</code>
 	 */
 	public static <T extends Comparable<T>> Predicate<T> ne(T val) {
-		return nameInt(o -> compare(o, val) != 0, () -> String.format("Must be not equal to %s", val));
+		return nameInt(o -> compare(o, val) != 0, () -> String.format("Must not be equal to %s", val));
 	}
 	
 	/**
@@ -690,13 +672,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.equalTo(null)  ) == null
-	 *     Require.require([],        Require.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],        Require.equalTo([])    ) == []
-	 *     Require.require([1],       Require.equalTo([1, 2])) # throws IllegalArgumentException("Must be equal to [1, 2]")
-	 *     Require.require([1, 2],    Require.equalTo([1, 2])) == [1, 2]
-	 *     Require.require([2, 1],    Require.equalTo([1, 2])) # throws IllegalArgumentException("Must be equal to [1, 2]")
-	 *     Require.require([1, 2, 3], Require.equalTo([1, 2])) # throws IllegalArgumentException("Must be equal to [1, 2]")
+	 *     Requirements.require(null,      Requirements.equalTo(null)  ) == null
+	 *     Requirements.require([],        Requirements.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],        Requirements.equalTo([])    ) == []
+	 *     Requirements.require([1],       Requirements.equalTo([1, 2])) # throws IllegalArgumentException("Must be equal to [1, 2]")
+	 *     Requirements.require([1, 2],    Requirements.equalTo([1, 2])) == [1, 2]
+	 *     Requirements.require([2, 1],    Requirements.equalTo([1, 2])) # throws IllegalArgumentException("Must be equal to [1, 2]")
+	 *     Requirements.require([1, 2, 3], Requirements.equalTo([1, 2])) # throws IllegalArgumentException("Must be equal to [1, 2]")
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -713,13 +695,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.equalTo(null)  ) == null
-	 *     Require.require([],        Require.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],        Require.equalTo([])    ) == []
-	 *     Require.require([1],       Require.equalTo([1, 2])) # throws IllegalArgumentException
-	 *     Require.require([1, 2],    Require.equalTo([1, 2])) == [1, 2]
-	 *     Require.require([2, 1],    Require.equalTo([1, 2])) # throws IllegalArgumentException
-	 *     Require.require([1, 2, 3], Require.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require(null,      Requirements.equalTo(null)  ) == null
+	 *     Requirements.require([],        Requirements.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],        Requirements.equalTo([])    ) == []
+	 *     Requirements.require([1],       Requirements.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require([1, 2],    Requirements.equalTo([1, 2])) == [1, 2]
+	 *     Requirements.require([2, 1],    Requirements.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require([1, 2, 3], Requirements.equalTo([1, 2])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -736,13 +718,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.equalTo(null)  ) == null
-	 *     Require.require([],        Require.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],        Require.equalTo([])    ) == []
-	 *     Require.require([1],       Require.equalTo([1, 2])) # throws IllegalArgumentException
-	 *     Require.require([1, 2],    Require.equalTo([1, 2])) == [1, 2]
-	 *     Require.require([2, 1],    Require.equalTo([1, 2])) # throws IllegalArgumentException
-	 *     Require.require([1, 2, 3], Require.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require(null,      Requirements.equalTo(null)  ) == null
+	 *     Requirements.require([],        Requirements.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],        Requirements.equalTo([])    ) == []
+	 *     Requirements.require([1],       Requirements.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require([1, 2],    Requirements.equalTo([1, 2])) == [1, 2]
+	 *     Requirements.require([2, 1],    Requirements.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require([1, 2, 3], Requirements.equalTo([1, 2])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -759,13 +741,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,      Require.equalTo(null)  ) == null
-	 *     Require.require([],        Require.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],        Require.equalTo([])    ) == []
-	 *     Require.require([1],       Require.equalTo([1, 2])) # throws IllegalArgumentException
-	 *     Require.require([1, 2],    Require.equalTo([1, 2])) == [1, 2]
-	 *     Require.require([2, 1],    Require.equalTo([1, 2])) # throws IllegalArgumentException
-	 *     Require.require([1, 2, 3], Require.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require(null,      Requirements.equalTo(null)  ) == null
+	 *     Requirements.require([],        Requirements.equalTo(null)  ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],        Requirements.equalTo([])    ) == []
+	 *     Requirements.require([1],       Requirements.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require([1, 2],    Requirements.equalTo([1, 2])) == [1, 2]
+	 *     Requirements.require([2, 1],    Requirements.equalTo([1, 2])) # throws IllegalArgumentException
+	 *     Requirements.require([1, 2, 3], Requirements.equalTo([1, 2])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -782,13 +764,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,            Require.equalTo(null)      ) == null
-	 *     Require.require([],              Require.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],              Require.equalTo([])        ) == []
-	 *     Require.require(['1'],           Require.equalTo(['1', '2'])) # throws IllegalArgumentException
-	 *     Require.require(['1', '2'],      Require.equalTo(['1', '2'])) == ['1', '2']
-	 *     Require.require(['2', '1'],      Require.equalTo(['1', '2'])) # throws IllegalArgumentException
-	 *     Require.require(['1', '2', '3'], Require.equalTo(['1', '2'])) # throws IllegalArgumentException
+	 *     Requirements.require(null,            Requirements.equalTo(null)      ) == null
+	 *     Requirements.require([],              Requirements.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],              Requirements.equalTo([])        ) == []
+	 *     Requirements.require(['1'],           Requirements.equalTo(['1', '2'])) # throws IllegalArgumentException
+	 *     Requirements.require(['1', '2'],      Requirements.equalTo(['1', '2'])) == ['1', '2']
+	 *     Requirements.require(['2', '1'],      Requirements.equalTo(['1', '2'])) # throws IllegalArgumentException
+	 *     Requirements.require(['1', '2', '3'], Requirements.equalTo(['1', '2'])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -805,13 +787,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,                 Require.equalTo(null)         ) == null
-	 *     Require.require([],                   Require.equalTo(null)         ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],                   Require.equalTo([])           ) == []
-	 *     Require.require([true],               Require.equalTo([true, false])) # throws IllegalArgumentException
-	 *     Require.require([true, false],        Require.equalTo([true, false])) == [true, false]
-	 *     Require.require([false, true],        Require.equalTo([true, false])) # throws IllegalArgumentException
-	 *     Require.require([true, false, false], Require.equalTo([true, false])) # throws IllegalArgumentException
+	 *     Requirements.require(null,                 Requirements.equalTo(null)         ) == null
+	 *     Requirements.require([],                   Requirements.equalTo(null)         ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],                   Requirements.equalTo([])           ) == []
+	 *     Requirements.require([true],               Requirements.equalTo([true, false])) # throws IllegalArgumentException
+	 *     Requirements.require([true, false],        Requirements.equalTo([true, false])) == [true, false]
+	 *     Requirements.require([false, true],        Requirements.equalTo([true, false])) # throws IllegalArgumentException
+	 *     Requirements.require([true, false, false], Requirements.equalTo([true, false])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -828,13 +810,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,            Require.equalTo(null)      ) == null
-	 *     Require.require([],              Require.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],              Require.equalTo([])        ) == []
-	 *     Require.require([1.0],           Require.equalTo([1.0, 2.0])) # throws IllegalArgumentException
-	 *     Require.require([1.0, 2.0],      Require.equalTo([1.0, 2.0])) == [1.0, 2.0]
-	 *     Require.require([2.0, 1.0],      Require.equalTo([1.0, 2.0])) # throws IllegalArgumentException
-	 *     Require.require([1.0, 2.0, 3.0], Require.equalTo([1.0, 2.0])) # throws IllegalArgumentException
+	 *     Requirements.require(null,            Requirements.equalTo(null)      ) == null
+	 *     Requirements.require([],              Requirements.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],              Requirements.equalTo([])        ) == []
+	 *     Requirements.require([1.0],           Requirements.equalTo([1.0, 2.0])) # throws IllegalArgumentException
+	 *     Requirements.require([1.0, 2.0],      Requirements.equalTo([1.0, 2.0])) == [1.0, 2.0]
+	 *     Requirements.require([2.0, 1.0],      Requirements.equalTo([1.0, 2.0])) # throws IllegalArgumentException
+	 *     Requirements.require([1.0, 2.0, 3.0], Requirements.equalTo([1.0, 2.0])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -851,13 +833,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,            Require.equalTo(null)      ) == null
-	 *     Require.require([],              Require.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],              Require.equalTo([])        ) == []
-	 *     Require.require([1.0],           Require.equalTo([1.0, 2.0])) # throws IllegalArgumentException
-	 *     Require.require([1.0, 2.0],      Require.equalTo([1.0, 2.0])) == [1.0, 2.0]
-	 *     Require.require([2.0, 1.0],      Require.equalTo([1.0, 2.0])) # throws IllegalArgumentException
-	 *     Require.require([1.0, 2.0, 3.0], Require.equalTo([1.0, 2.0])) # throws IllegalArgumentException
+	 *     Requirements.require(null,            Requirements.equalTo(null)      ) == null
+	 *     Requirements.require([],              Requirements.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],              Requirements.equalTo([])        ) == []
+	 *     Requirements.require([1.0],           Requirements.equalTo([1.0, 2.0])) # throws IllegalArgumentException
+	 *     Requirements.require([1.0, 2.0],      Requirements.equalTo([1.0, 2.0])) == [1.0, 2.0]
+	 *     Requirements.require([2.0, 1.0],      Requirements.equalTo([1.0, 2.0])) # throws IllegalArgumentException
+	 *     Requirements.require([1.0, 2.0, 3.0], Requirements.equalTo([1.0, 2.0])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param arr The object to compare to - Can be null
@@ -874,13 +856,13 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null,            Require.equalTo(null)      ) == null
-	 *     Require.require([],              Require.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
-	 *     Require.require([],              Require.equalTo([])        ) == []
-	 *     Require.require(["1"],           Require.equalTo(["1", "2"])) # throws IllegalArgumentException
-	 *     Require.require(["1", "2"],      Require.equalTo(["1", "2"])) == ["1", "2"]
-	 *     Require.require(["2", "1"],      Require.equalTo(["1", "2"])) # throws IllegalArgumentException
-	 *     Require.require(["1", "2", "3"], Require.equalTo(["1", "2"])) # throws IllegalArgumentException
+	 *     Requirements.require(null,            Requirements.equalTo(null)      ) == null
+	 *     Requirements.require([],              Requirements.equalTo(null)      ) # throws IllegalArgumentException("Must be equal to null")
+	 *     Requirements.require([],              Requirements.equalTo([])        ) == []
+	 *     Requirements.require(["1"],           Requirements.equalTo(["1", "2"])) # throws IllegalArgumentException
+	 *     Requirements.require(["1", "2"],      Requirements.equalTo(["1", "2"])) == ["1", "2"]
+	 *     Requirements.require(["2", "1"],      Requirements.equalTo(["1", "2"])) # throws IllegalArgumentException
+	 *     Requirements.require(["1", "2", "3"], Requirements.equalTo(["1", "2"])) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param <E> the element type of the array being tests
@@ -898,11 +880,11 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.equalTo("1") ) # throws IllegalArgumentException
-	 *     Require.require(null, Require.equalTo(null)) == null
-	 *     Require.require("",   Require.equalTo(null)) # throws IllegalArgumentException
-	 *     Require.require("1",  Require.equalTo("1") ) == ""
-	 *     Require.require("2",  Require.equalTo("1") ) # throws IllegalArgumentException
+	 *     Requirements.require(null, Requirements.equalTo("1") ) # throws IllegalArgumentException
+	 *     Requirements.require(null, Requirements.equalTo(null)) == null
+	 *     Requirements.require("",   Requirements.equalTo(null)) # throws IllegalArgumentException
+	 *     Requirements.require("1",  Requirements.equalTo("1") ) == "1"
+	 *     Requirements.require("2",  Requirements.equalTo("1") ) # throws IllegalArgumentException
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -920,14 +902,14 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(null, Require.same("1") ) # throws IllegalArgumentException("Must be same object as 1")
-	 *     Require.require(null, Require.same(null)) == null
-	 *     Require.require("",   Require.same(null)) # throws IllegalArgumentException("Must be same object as null")
-	 *     Require.require("1",  Require.same("1") ) == ""
-	 *     Require.require("2",  Require.same("1") ) # throws IllegalArgumentException("Must be same object as 1")
+	 *     Requirements.require(null, Requirements.same("1") ) # throws IllegalArgumentException("Must be same object as 1")
+	 *     Requirements.require(null, Requirements.same(null)) == null
+	 *     Requirements.require("",   Requirements.same(null)) # throws IllegalArgumentException("Must be same object as null")
+	 *     Requirements.require("1",  Requirements.same("1") ) == "1"
+	 *     Requirements.require("2",  Requirements.same("1") ) # throws IllegalArgumentException("Must be same object as 1")
 	 *     Foo foo = new Foo();
 	 *     Foo bar = new Foo();
-	 *     Require.require(foo, Require.same(bar) # throws IllegalArgumentException("Must be same object as ...")
+	 *     Requirements.require(foo, Requirements.same(bar) # throws IllegalArgumentException("Must be same object as ...")
 	 * </pre>
 	 *     
 	 * @param <T> The type of the object being tested
@@ -945,9 +927,9 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(1, Require.and(Equal.gt(0), Equal.lt(2))) == 1
-	 *     Require.require(1, Require.and(Equal.gt(1), Equal.lt(2))) # throws IllegalArgumentException("(Must be greater than 1) and (Must be less than 2)")
-	 *     Require.require(1, Require.and(Equal.gt(0), Equal.lt(0))) # throws IllegalArgumentException("(Must be greater than 0) and (Must be less than 0)")
+	 *     Requirements.require(1, Requirements.and(Requirements.gt(0), Requirements.lt(2))) == 1
+	 *     Requirements.require(1, Requirements.and(Requirements.gt(1), Requirements.lt(2))) # throws IllegalArgumentException("Must (Be greater than 1) and (Be less than 2)")
+	 *     Requirements.require(1, Requirements.and(Requirements.gt(0), Requirements.lt(0))) # throws IllegalArgumentException("(Must (Be greater than 0) and (Be less than 0)")
 	 * </pre>
 	 *     
 	 * @param <T> the type of the object being tested
@@ -958,7 +940,86 @@ public final class Requirements {
 	public static <T> Predicate<T> and(Predicate<T> p1, Predicate<T> p2) {
 		requireInt(p1, () -> "p1", notNull());
 		requireInt(p2, () -> "p2", notNull());
-		return nameInt(p1.and(p2), () -> "(" + p1 + ") and (" + p2 + ")");
+		return nameInt(p1.and(p2), () -> String.format("Must (%s) and (%s)",
+				removeMust(p1),
+				removeMust(p2)));
+	}
+
+	/**
+	 * Returns a predicate that implements if-then-else constructs.  If <code>ifClause</code> is satisfied,
+	 *    then <code>thenClause</code> must be satisfied, else <code>elseClause</code> must be satisfied.
+	 * NULL's are allowed.
+	 * 
+	 * <pre>
+	 * Example:
+	 *     Requirements.require( 5, Requirements.ifThenElse(Requirements.gt(0), Requirements.gt(3), Requirements.lt(-2)) == 5
+	 *     Requirements.require( 2, Requirements.ifThenElse(Requirements.gt(0), Requirements.gt(3), Requirements.lt(-2)) # throws IllegalArgumentException("if (Be greater than 0) then (Must be greater than 3) else (Be less than -2)")
+	 *     Requirements.require(-4, Requirements.ifThenElse(Requirements.gt(0), Requirements.gt(3), Requirements.lt(-2)) == -4
+	 *     Requirements.require(-1, Requirements.ifThenElse(Requirements.gt(0), Requirements.gt(3), Requirements.lt(-2)) # throws IllegalArgumentException("if (Be greater than 0) then (Must be greater than 3) else (Be less than -2)")
+	 * </pre>
+	 *     
+	 * @param <T> the type of the object being tested
+	 * @param ifClause The first predicate  - Can't be null
+	 * @param thenClause The second predicate - Can't be null
+	 * @param elseClause The second predicate - Can't be null
+	 * @return A predicate that implements if-then-else constructs
+	 */
+	public static <T> Predicate<T> ifThenElse(Predicate<T> ifClause, Predicate<T> thenClause, Predicate<T> elseClause) {
+		requireInt(ifClause, () -> "ifClause", notNull());
+		requireInt(thenClause, () -> "thenClause", notNull());
+		requireInt(elseClause, () -> "elseClause", notNull());
+		return nameInt(obj -> ifClause.test(obj) ? thenClause.test(obj) : elseClause.test(obj),
+				() -> String.format("if (%s) then (%s) else (%s)", removeMust(ifClause), thenClause, elseClause));
+	}
+	
+	/**
+	 * Returns a predicate that implements if-then constructs.  If <code>ifClause</code> is satisfied,
+	 *    then <code>thenClause</code> must be satisfied.
+	 * NULL's are allowed.
+	 * 
+	 * <pre>
+	 * Example:
+	 *     Requirements.require( 5, Requirements.ifThen(Requirements.gt(0), Requirements.gt(3)) == 5
+	 *     Requirements.require( 2, Requirements.ifThen(Requirements.gt(0), Requirements.gt(3)) # throws IllegalArgumentException("if (Be greater than 0) then (Must be greater than 3)")
+	 *     Requirements.require(-1, Requirements.ifThen(Requirements.gt(0), Requirements.gt(3)) == -1
+	 * </pre>
+	 *     
+	 * @param <T> the type of the object being tested
+	 * @param ifClause The first predicate  - Can't be null
+	 * @param thenClause The second predicate - Can't be null 
+	 * @return A predicate that implements if-then-else constructs
+	 */
+	public static <T> Predicate<T> ifThen(Predicate<T> ifClause, Predicate<T> thenClause) {
+		requireInt(ifClause, () -> "ifClause", notNull());
+		requireInt(thenClause, () -> "thenClause", notNull());
+		return nameInt(obj -> ifClause.test(obj) ? thenClause.test(obj) : true,
+				() -> String.format("if (%s) then (%s)", removeMust(ifClause), thenClause));
+	}
+	
+	/**
+	 * Returns a predicate that ensures an exception is not thrown by a body of code.
+	 * 
+	 * <pre>
+	 * Example:
+	 *     Requirements.require("abc", Requirements.doesNotThrowException(Requirements.nameC(
+	 *         x -&gt; {throw new Exception();}, () -&gt; "foo")) # throws IllegalArgumentException("foo: Must not throw exception")
+	 *     Requirements.require("abc", Requirements.doesNotThrowException(Requirements.nameC(x -&gt; {}, () -&gt; "foo")) == "abc"
+	 * </pre>
+	 * 
+	 * @param <T> The type of the object being tested
+	 * @param <E> The exception type, so that checked exceptions can be used.
+	 * @param consumer The consumer of the object.
+	 * @return true, if no exception was thrown, false otherwise.
+	 */
+	public static <T, E extends Throwable> Predicate<T> doesNotThrowException(ThrowingConsumer<T, E> consumer) {
+		return nameInt(obj -> {
+			try {
+				consumer.accept(obj);
+			} catch(Throwable t) {
+				return false;
+			}
+			return true;
+		}, () -> String.format("%s: Must not throw an exception", consumer)) ;
 	}
 
 	/**
@@ -968,10 +1029,10 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(1, Require.or(Equal.gt(0), Equal.lt(2))) == 1
-	 *     Require.require(1, Require.or(Equal.gt(1), Equal.lt(2))) == 1
-	 *     Require.require(1, Require.or(Equal.gt(0), Equal.lt(0))) == 1
-	 *     Require.require(1, Require.or(Equal.gt(1), Equal.gt(3))) # throws IllegalArgumentException("(Must be greater than 1) or (Must be less than 3)")
+	 *     Requirements.require(1, Requirements.or(Requirements.gt(0), Requirements.lt(2))) == 1
+	 *     Requirements.require(1, Requirements.or(Requirements.gt(1), Requirements.lt(2))) == 1
+	 *     Requirements.require(1, Requirements.or(Requirements.gt(0), Requirements.lt(0))) == 1
+	 *     Requirements.require(1, Requirements.or(Requirements.gt(1), Requirements.gt(3))) # throws IllegalArgumentException("Must (Be greater than 1) or (Be less than 3)")
 	 * </pre>
 	 *     
 	 * @param <T> the type of the object being tested
@@ -982,7 +1043,9 @@ public final class Requirements {
 	public static <T> Predicate<T> or(Predicate<T> p1, Predicate<T> p2) {
 		requireInt(p1, () -> "p1", notNull());
 		requireInt(p2, () -> "p2", notNull());
-		return nameInt(p1.or(p2), () -> "(" + p1 + ") or (" + p2 + ")");
+		return nameInt(p1.or(p2), () -> String.format("Must (%s) or (%s)",
+				removeMust(p1),
+				removeMust(p2)));
 	}
 
 	/**
@@ -992,8 +1055,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require(1, Require.not(Equal.gt(0))) # throws IllegalArgumentException("not (Must be greater than 0)")
-	 *     Require.require(1, Require.not(Equal.gt(1))) == 1
+	 *     Requirements.require(1, Requirements.negate(Requirements.gt(0))) # throws IllegalArgumentException("Must not (Be greater than 0)")
+	 *     Requirements.require(1, Requirements.negate(Requirements.gt(1))) == 1
 	 * </pre>
 	 *     
 	 * @param <T> the type of the object being tested
@@ -1002,7 +1065,7 @@ public final class Requirements {
 	 */
 	public static <T> Predicate<T> negate(Predicate<T> p) {
 		requireInt(p, notNull());
-		return nameInt(p.negate(), () -> "not ("+p+")");
+		return nameInt(p.negate(), () -> String.format("Must not (%s)", removeMust(p)));
 	}
 	
 	/**
@@ -1012,7 +1075,7 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.name(someobj -&gt; true, () -&gt; "True").toString() == "True"
+	 *     Requirements.name(someobj -&gt; true, () -&gt; "True").toString() == "True"
 	 * </pre>
 	 * 
 	 * @param <T> The type of the object being tested
@@ -1029,8 +1092,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.values().apply({a =&gt; 1, b =&gt; 2}) == [1, 2]
-	 *     Require.values().toString() == "values"
+	 *     Requirements.values().apply({a =&gt; 1, b =&gt; 2}) == [1, 2]
+	 *     Requirements.values().toString() == "values"
 	 * </pre>
 	 *     
 	 * @param <K> The Map key type
@@ -1047,8 +1110,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.values().apply({a =&gt; 1, b =&gt;2}) == [1, 2]
-	 *     Require.values().toString() == "keys"
+	 *     Requirements.values().apply({a =&gt; 1, b =&gt;2}) == [1, 2]
+	 *     Requirements.values().toString() == "keys"
 	 * </pre>
 	 *     
 	 * @param <K> The Map key type
@@ -1065,8 +1128,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.mapSize().apply({a =&gt; 1, b =&gt; 2}) == 2
-	 *     Require.mapSize().toString() == "size"
+	 *     Requirements.mapSize().apply({a =&gt; 1, b =&gt; 2}) == 2
+	 *     Requirements.mapSize().toString() == "size"
 	 * </pre>
 	 *     
 	 * @param <K> The Map key type
@@ -1083,8 +1146,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.stringify().apply(3) == "3"
-	 *     Require.stringify().toString() == "toString"
+	 *     Requirements.stringify().apply(3) == "3"
+	 *     Requirements.stringify().toString() == "toString"
 	 * </pre>
 	 *
 	 * @param <T> the type of the object being operated on
@@ -1099,8 +1162,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.hash().apply(o) == o.hashCode()
-	 *     Require.hash().toString() == "hash"
+	 *     Requirements.hash().apply(o) == o.hashCode()
+	 *     Requirements.hash().toString() == "hash"
 	 * </pre>
 	 *     
 	 * @param <T> the type of the object being operated on
@@ -1115,8 +1178,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.length().apply("abc") ==length3
-	 *     Require.length().toString() == "hash"
+	 *     Requirements.length().apply("abc") ==length3
+	 *     Requirements.length().toString() == "hash"
 	 * </pre>
 	 *     
 	 * @return A named function representing Object::hash
@@ -1130,8 +1193,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.size().apply([4,5]) == 2
-	 *     Require.size().toString() == "size"
+	 *     Requirements.size().apply([4,5]) == 2
+	 *     Requirements.size().toString() == "size"
 	 * </pre>
 	 *     
 	 * @param <E> the type for the element of the collection
@@ -1144,21 +1207,42 @@ public final class Requirements {
 
 	/**
 	 * Adds a toString to a predicate.   This is the mechanism by which we can associate strings
-	 * with predicates, giving nice messages when they fail.
+	 * with predicates, giving nice messages when they fail.   Function are primarily used
+	 * with {@link #chain(Function, Predicate)}
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.nameF(String::length, () -&gt; "Length").toString() == "Length"
+	 *     Requirements.nameF(String::length, () -&gt; "Length").toString() == "Length"
 	 * </pre>
 	 *     
 	 * @param <T> The type being operated on by the function
 	 * @param <U> The return type of the function
-	 * @param f The function to decorate with a message - Can't be null 
+	 * @param function The function to decorate with a message - Can't be null 
 	 * @param msg The supplier of the message - Can't be null 
 	 * @return A function whose toString will return the msg.
 	 */
-	public static <T, U> Function<T, U> nameF(Function<T, U> f, Supplier<String> msg) {
-		return nameFInt(requireInt(f, () -> "f", notNull()), requireInt(msg, () -> "msg", notNull()));
+	public static <T, U> Function<T, U> nameF(Function<T, U> function, Supplier<String> msg) {
+		return nameFInt(requireInt(function, () -> "f", notNull()), requireInt(msg, () -> "msg", notNull()));
+	}
+
+	/**
+	 * Adds a toString to a consumer.   This is the mechanism by which we can associate strings
+	 * with consumers, giving nice messages when they fail.   Consumers are primarily used
+	 * with {@link #doesNotThrowException(ThrowingConsumer)}
+	 * 
+	 * <pre>
+	 * Example:
+	 *     Requirements.nameC(x -&gt; {}, () -&gt; "Empty").toString() == "Empty"
+	 * </pre>
+	 * 
+	 * @param <T> The type being operated on by the consumer
+	 * @param <E> The exception type
+	 * @param consumer The consumer to decorate with a message - Can't be null 
+	 * @param msg The supplier of the message - Can't be null 
+	 * @return A consumer whose toString will return the msg.
+	 */
+	public static <T, E extends Throwable> ThrowingConsumer<T, E>  nameC(ThrowingConsumer<T, E> consumer, Supplier<String> msg) {
+		return nameCInt(requireInt(consumer, () -> "consumer", notNull()), requireInt(msg, () -> "msg", notNull()));
 	}
 
 	/**
@@ -1169,8 +1253,8 @@ public final class Requirements {
 	 * 
 	 * <pre>
 	 * Example:
-	 *     Require.require("abc", Require.chain(Require.length(), Equal.gt(2)) == "abc"
-	 *     Require.require("ab",  Require.chain(Require.length(), Equal.gt(2)) # throws IllegalArgumentException("length: Must be greater than 0")
+	 *     Requirements.require("abc", Requirements.chain(Requirements.length(), Requirements.gt(2)) == "abc"
+	 *     Requirements.require("ab",  Requirements.chain(Requirements.length(), Requirements.gt(2)) # throws IllegalArgumentException("length: Must be greater than 0")
 	 * </pre>
 	 *     
 	 * If f throws an exception, it will be passed on to the caller.
@@ -1182,6 +1266,44 @@ public final class Requirements {
 	 */
 	public static <T, U> Predicate<T> chain(Function<T,U> f, Predicate<U> p) {
 		return nameInt(o -> p.test(f.apply(o)), () -> f + ": " + p) ;
+	}
+
+	static <E> boolean allMembers(Iterable<? extends E> collection, Predicate<E> memberTest) {
+		for(E member: collection) {
+			if (!memberTest.test(member)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	static <E> boolean anyMember(Iterable<? extends E> collection, Predicate<E> memberTest) {
+		for(E member: collection) {
+			if (memberTest.test(member)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	static <T> String removeMust(Predicate<T> p1) {
+		return removeMust(p1.toString());
+	}
+
+	static String removeMust(String msg) {
+		StringBuilder sb = new StringBuilder();
+		int i = 0;
+		while(i + 5 < msg.length()) {
+			if (msg.charAt(i) == 'M' && msg.charAt(i + 1) == 'u'
+					&& msg.charAt(i + 2) == 's' && msg.charAt(i + 3) == 't'
+					&& msg.charAt(i + 4) == ' ') {
+				sb.append(Character.toUpperCase(msg.charAt(i + 5)));
+				i += 6;
+			} else {
+				sb.append(msg.charAt(i++));
+			}
+		}
+		return sb + msg.substring(i);
 	}
 
 	private static <T, U> Function<T, U> nameFInt(Function<T, U> f, Supplier<String> msg) {
@@ -1205,7 +1327,7 @@ public final class Requirements {
 	 * @param o2 Object 2 - Can be null 
 	 * @return < 0 if o1 < o2, 0 if o1 = o2 > 0, if o1 > o2
 	 */
-	private static <T extends Comparable<T>> int compare(T o1, T o2) {
+	static <T extends Comparable<T>> int compare(T o1, T o2) {
 		if (o1 == null) {
 			if (o2 == null) {
 				return 0;
@@ -1241,6 +1363,20 @@ public final class Requirements {
 				return pred.test(t);
 			}
 			
+			@Override
+			public String toString() {
+				return msg.get();
+			}
+		};
+	}
+
+	private static <T, E extends Throwable> ThrowingConsumer<T, E> nameCInt(ThrowingConsumer<T, E> cons, Supplier<String> msg) {
+		return new ThrowingConsumer<T, E>() {
+
+			@Override
+			public void accept(T t) throws E {
+				cons.accept(t);				
+			}
 			@Override
 			public String toString() {
 				return msg.get();
